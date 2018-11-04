@@ -1,0 +1,51 @@
+
+package kennyng.katbox;
+
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+
+/**
+ *  by  Kenny on 04/11/2018.
+ */
+
+public class MainActivity extends AppCompatActivity {
+    private MediaPlayer mPlayer = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Les Future button
+        Button bonjour = (Button) findViewById(R.id.bonjour);
+        bonjour.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                playSoud(R.raw.bonjour);
+            }
+        });
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+        }
+    }
+
+    private void playSoud(int resId) {
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+        }
+        mPlayer = MediaPlayer.create(this, resId);
+        mPlayer.start();
+    }
+}
